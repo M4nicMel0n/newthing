@@ -1,4 +1,3 @@
-
 local sethook = debug and debug.sethook or function() end;
 local allowedLine = nil;
 local called = 0;
