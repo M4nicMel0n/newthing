@@ -12,7 +12,7 @@ local Library = {}
         return parent
     end
     function Library.MakeWindow(Size, Subtext, ColorTheme)
-        local ColorTheme = ColorTheme or Color3.fromRGB(23, 255, 131)
+        local ColorTheme = ColorTheme or Color3.fromRGB(0, 155, 0)
         local WindowConnections = {Connections = {}}
         function WindowConnections:IsPress(input)
             return input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch
