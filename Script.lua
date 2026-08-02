@@ -141,7 +141,7 @@ local FarmLeaves = {Enabled = false, Forced = false}
 
 local Variables = {
     FarmField = "Dandelion Field",
-    TweenSpeed = 12
+    TweenSpeed = 100
 }
 local CombatVariables = {
     VicMax = 12,
@@ -700,7 +700,7 @@ end
 
 Stored.FieldIsAllowed = true
 Stored.CanFarm = true
-Variables.TweenSpeed = 12
+Variables.TweenSpeed = 100
 Variables.ConvertAt = 100
 Variables.ConvertBalloon = true
 Variables.GatherInterrupt = true
