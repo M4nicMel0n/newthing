@@ -63,7 +63,7 @@ if not isfile("namehub.png") then
     writefile("namehub.png", game:HttpGet("https://raw.githubusercontent.com/NameHubScript/_/refs/heads/main/static(1).png"))
 end
 if not isfile("namehub2.png") then
-    writefile("namehub2.png", game:HttpGet("https://github.com/NameHubScript/_/raw/refs/heads/main/smallicon.png"))
+    writefile("namehub2.png", game:HttpGet("https://raw.githubusercontent.com/M4nicMel0n/newthing/main/smallicon.png"))
 end
 for i,v in pairs(workspace.Decorations["Diamond Mask Hall"]:GetChildren()) do
 	if v:FindFirstChild("GateScript") and v.Name == "Part" then
@@ -124,7 +124,7 @@ function PushAlert(Text, Style)
     setthreadidentity(8)
 end
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/twitch-stremaer/apex-beta-things/refs/heads/main/new%20ui%20%20lib.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/M4nicMel0n/newthing/main/new.lua"))()
 
 local NewLib = Library.MakeWindow(nil, "Bee Swarm Simulator", _G.ColorTheme)
 local MainTab = NewLib.MakeTab("Auto Farm", "rbxassetid://10723407389", "Farm in field")
@@ -1916,7 +1916,7 @@ MovementSection.Toggle("Mobile Button", function(Toggled)
 end, true)
 
 local SavesSection = SettingsTab; SettingsTab.Section("Saves")
-SavesSection.Label("Config saving is coming soon! 💖")
+SavesSection.Label("Config saving is coming soon maybe")
 
 LocalPlayer.CharacterAdded:Connect(function()
     repeat task.wait() until GetHumanoid()
@@ -1954,7 +1954,7 @@ end)
 
 for i, v in pairs(Workspace.Particles:GetChildren()) do
 	if string.find(v.Name, "Vicious") then
-        PushAlert("[Name Hub] Vicious Bee detected in " .. tostring(FindField(v.Position)))
+        PushAlert("[Mel0n Hub] Vicious Bee detected in " .. tostring(FindField(v.Position)))
 		Stored.ViciousBeeDetected = true
     end
 end
@@ -1962,7 +1962,7 @@ end
 Workspace.Particles.ChildAdded:Connect(function(instance)
 	task.wait()
 	if string.find(instance.Name, "Vicious") then
-        PushAlert("[Name Hub] Vicious Bee spawned in " .. tostring(FindField(instance.Position)))
+        PushAlert("[Mel0n Hub] Vicious Bee spawned in " .. tostring(FindField(instance.Position)))
 		Stored.ViciousBeeDetected = true
 
 	elseif instance.Name == "Guiding Star" then 
@@ -2005,6 +2005,6 @@ end)
 local finalTick = tostring(tick() - loadTick)
 local loadSeconds = finalTick:match("(%d+)%.")
 local loadMilleseconds = finalTick:match("%.(.+)"):sub(1, 2)
-PushAlert("Name Hub loaded in " .. (loadSeconds .. "." .. loadMilleseconds) .. "s", "RainbowWithSound")
+PushAlert("Mel0n Hub loaded in " .. (loadSeconds .. "." .. loadMilleseconds) .. "s", "RainbowWithSound")
 
 setfpscap(1000)
