@@ -19,23 +19,31 @@ end, "l", 5);
 sethook();
 if called < 2 then
     valid = false;
+end
 if called < 2 then
     valid = false;
+end
+
 -- Anti Function Hook
 local funcs = {pcall, string.char, debug.getinfo, string.dump}
 for i = 1, #funcs do
     if debug.getinfo(funcs[i]).what ~= "C" then
         valid = false;
     end
+
     if pcall(string.dump, funcs[i]) then
         valid = false;
     end
+end
+
 -- Anti Beautify
 local function getTraceback()
     local str = (function(arg)
         return debug.traceback(arg)
     end)("]] .. string .. [[");
     return str;
+end
+
 local traceback = getTraceback();
 valid = valid and traceback:sub(1, traceback:find("\n") - 1) == "]] .. string .. [[";
 local iter = traceback:gmatch(":(%d*):");
@@ -43,25 +51,32 @@ local v, c = iter(), 1;
 for i in iter do
     valid = valid and i == v;
     c = c + 1;
+end
 valid = valid and c >= 2;
 for i=1,50 do
 face={string.rep("Retard! ", 6e6)}
 end;
 ndebugging=true;
 local loadTick, curb1, loadCompensation = tick(), tick(), 0
+
 if not isfile("namehub.png") then
     writefile("namehub.png", game:HttpGet("https://raw.githubusercontent.com/NameHubScript/_/refs/heads/main/static(1).png"))
+end
 if not isfile("namehub2.png") then
     writefile("namehub2.png", game:HttpGet("https://github.com/NameHubScript/_/raw/refs/heads/main/smallicon.png"))
+end
 for i,v in pairs(workspace.Decorations["Diamond Mask Hall"]:GetChildren()) do
 	if v:FindFirstChild("GateScript") and v.Name == "Part" then
 		v.CanTouch = false
 	end
+end
 workspace.Decorations["30BeeZone"].Pit.CanTouch = false
+
 local uni = game:GetService("CoreGui").TopBarApp.TopBarApp.UnibarLeftFrame.UnibarMenu
 uni["1"].FillDirection = Enum.FillDirection.Horizontal
 if uni:FindFirstChild("4") then
     uni["4"]:Destroy()
+end
 local MobButton = uni["2"]:Clone()
 MobButton.Parent = uni
 MobButton.Name = "4"
@@ -71,6 +86,7 @@ local chatclone = MobButton["3"].chat
 chatclone.Position = UDim2.fromOffset(0, 0)
 for i, v in pairs({"5", "Highlighter", "SelectedHighlighter", "IntegrationIconFrame"}) do
     chatclone[v]:Destroy()
+end
 local img = Instance.new("ImageButton", chatclone)
 img.Size = UDim2.fromOffset(20, 20)
 img.Position = UDim2.fromScale(0.5, 0.5)
@@ -80,8 +96,11 @@ img.BackgroundTransparency = 1
 img.MouseButton1Click:Connect(function()
     getgenv().UI.Enabled = not getgenv().UI.Enabled
 end)
+
 local honey = "rbxassetid://1472135114"
+
 _G.ColorTheme = Color3.fromRGB(153, 51, 255)
+
 local Players = cloneref(game:GetService("Players"))
 local LocalPlayer = Players.LocalPlayer
 local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
@@ -103,34 +122,44 @@ function PushAlert(Text, Style)
     setthreadidentity(2)
     AlertBoxes:Push(Text, nil, Style or "Vicious")
     setthreadidentity(8)
+end
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/twitch-stremaer/apex-beta-things/refs/heads/main/new%20ui%20%20lib.lua"))()
+
 local NewLib = Library.MakeWindow(nil, "Bee Swarm Simulator", _G.ColorTheme)
 local MainTab = NewLib.MakeTab("Auto Farm", "rbxassetid://10723407389", "Farm in field")
 local CombatTab = NewLib.MakeTab("Combat", "rbxassetid://10734975692", "Kill mobs")
 local ToysTab = NewLib.MakeTab("Toys", "rbxassetid://10709769508", "Auto toys")
 local QuestsTab = NewLib.MakeTab("Auto Quest", "rbxassetid://10709781717", "Quest completer")
 local SettingsTab = NewLib.MakeTab("Settings", "rbxassetid://81165630831343", "Config Script")
+
 local FarmBubbles = {Enabled = false, Forced = false}
 local FarmFuzzyBombs = {Enabled = false, Forced = false}
 local FarmFires = {Enabled = false, Forced = false}
 local FarmLeaves = {Enabled = false, Forced = false}
+
+
 local Variables = {
     FarmField = "Dandelion Field",
     TweenSpeed = 12
+}
 local CombatVariables = {
     VicMax = 12,
     VicMin = 1
+}
 local ToyVariables = {}
 local QuestVariables = {}
 local Stored = {
     Leaves = {},
     Flowers = Workspace.Flowers:GetChildren()
+}
 local Modules = {}
 local FieldsBeeRequirement
 Modules.Collectors = require(ReplicatedStorage.Collectors.LocalCollect)
 Modules.ClientStatCache = require(ReplicatedStorage.ClientStatCache)
 Modules.Events = require(ReplicatedStorage.Events)
 Modules.Quests = require(ReplicatedStorage.Quests)
+
 local FlowerTick = tick()
 local FlowerPos = nil
 local function GetFlower(Field)
@@ -139,8 +168,10 @@ local function GetFlower(Field)
         FlowerPos = Field.Position + Vector3.new(math.random(-30, 30), 0, math.random(-30, 30))
     end
     return FlowerPos
+end
 local function GetStats(Optional)
     return Optional and Modules.ClientStatCache:Get(Optional) or Modules.ClientStatCache:Get()
+end
 local function FindLazy(path, name, method, requirement)
     if name == nil then
         path = Workspace
@@ -153,11 +184,13 @@ local function FindLazy(path, name, method, requirement)
             return true
         end
     end
+
     for i, v in pairs(path[method == 0 and "GetChildren" or "GetDescendants"](path)) do
         if tostring(v) == name and requirement(v) then
             return v
         end
     end
+end
 local function FindClosestLazy(path, name)
     local Root = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if Root then
@@ -182,6 +215,7 @@ local function FindClosestLazy(path, name)
         end
         return Found
     end
+end
 local function GetBeeCount()
     local Count = 0
     for i, v in pairs(game.Players.LocalPlayer.Honeycomb.Value.Cells:GetChildren()) do
@@ -190,16 +224,20 @@ local function GetBeeCount()
         end
     end
     return Count
+end
 local function GetFlowerZone(zone)
     return FlowerZones[zone or Variables.FarmField]
+end
 local function BetterMagnitude(part1, part2)
     local part1XY = part1.Position * Vector3.new(1, 0, 1)
     local part2XY = part2.Position * Vector3.new(1, 0, 1)
     return (part1XY - part2XY).Magnitude
+end
 local function BetterMagnitudeP(part1, part2)
     local part1XY = part1 * Vector3.new(1, 0, 1)
     local part2XY = part2 * Vector3.new(1, 0, 1)
     return (part1XY - part2XY).Magnitude
+end
 local function FieldZones(Color)
     local Fields = {}
     if Color then
@@ -222,30 +260,38 @@ local function FieldZones(Color)
         table.sort(Fields)
     end
     return Fields
+end
 local function UseItem(Name)
     Modules.Events.ClientCall("PlayerActivesCommand", {Name = Name})
+end
 local function GetRoot()
     if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") and LocalPlayer.Character.Humanoid.Health > 0 then
         return LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     else
         return nil
     end
+end
 local function GetHumanoid()
     return LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+end
 local function CheckCave(startPos, endPos)
 	local direction = (endPos - startPos).Unit
 	local ray = Ray.new(startPos, direction * (endPos - startPos).magnitude)
 	local part = Workspace:FindPartOnRayWithWhitelist(ray, {Workspace.Cave})
 	if part then return true else return false end
+end
+
 local TweenNoclip = nil
 function StopTween()
 	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 	local humanoidRootPart = character.PrimaryPart
 	local humanoid = character:FindFirstChildWhichIsA("Humanoid")
+
 	if TweenNoclip then 
 		pcall(function() TweenNoclip:Disconnect() end) 
 		TweenNoclip = nil 
 	end
+
 	if humanoidRootPart then
 		for i,v in pairs(humanoidRootPart:GetChildren()) do
 			if v:IsA("AlignPosition") or v:IsA("AlignOrientation") then
@@ -253,7 +299,9 @@ function StopTween()
 			end
 		end
 	end
+
 	if humanoid then humanoid:ChangeState(Enum.HumanoidStateType.Freefall) end
+end
 local function MakeTween(pos, speed, caveAvoid)
 	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 	local humanoid = character:WaitForChild("Humanoid")
@@ -265,9 +313,11 @@ local function MakeTween(pos, speed, caveAvoid)
 		humanoid = character:WaitForChild("Humanoid")
 		humanoidRootPart = character.PrimaryPart
 	end
+
 	StopTween()
 	local fixedSpeed = false
 	if speed then fixedSpeed = true end
+
 	local alignPos = Instance.new("AlignPosition")
 	alignPos.Mode = Enum.PositionAlignmentMode.OneAttachment
 	alignPos.Attachment0 = humanoidRootPart.RootAttachment
@@ -275,15 +325,18 @@ local function MakeTween(pos, speed, caveAvoid)
 	alignPos.MaxVelocity = (fixedSpeed and speed) or Variables.TweenSpeed
 	alignPos.Position = pos
 	alignPos.Parent = humanoidRootPart
+
 	local alignOrientation = Instance.new("AlignOrientation")
 	alignOrientation.Attachment0 = humanoidRootPart.RootAttachment
 	alignOrientation.Mode = Enum.OrientationAlignmentMode.OneAttachment
 	alignOrientation.RigidityEnabled = true
 	alignOrientation.CFrame = humanoidRootPart.CFrame
 	alignOrientation.Parent = humanoidRootPart
+
 	humanoid:ChangeState(Enum.HumanoidStateType.Landed)
 	task.wait()
 	humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+
 	TweenNoclip = game["Run Service"].PostSimulation:Connect(function()
 		for _, part in pairs(character:GetDescendants()) do
 			if part:IsA("BasePart") and part.CanCollide then
@@ -291,12 +344,15 @@ local function MakeTween(pos, speed, caveAvoid)
 			end
 		end
 	end)
+
 	local startTimestamp = tick()
 	local playerDied = false
 	local a = humanoid.Died:Connect(function() 
 		playerDied = true
 	end)
+
 	local tempNoClip = TweenNoclip
+
 	repeat 
 		task.wait()
 		if not fixedSpeed then
@@ -307,6 +363,7 @@ local function MakeTween(pos, speed, caveAvoid)
 		or tempNoClip ~= TweenNoclip 
 		or playerDied
 		or (tick() - startTimestamp) > 30
+
 	a:Disconnect()
 	if playerDied then
 		StopTween()
@@ -315,10 +372,14 @@ local function MakeTween(pos, speed, caveAvoid)
 		if caveAvoid then return end
 		return false, MakeTween(pos, speed)
 	end
+
 	if tempNoClip == TweenNoclip then
 		return true, StopTween()
 	end
+
 	return false
+end
+
 local function Tween(pos, speed)
 	local tweenCompleted = nil
 	coroutine.wrap(function() 
@@ -328,6 +389,8 @@ local function Tween(pos, speed)
 		if tweenCompleted == nil then tweenCompleted = false end
 	end)()
 	repeat task.wait() until tweenCompleted ~= nil
+end
+
 local function StopMovement()
     local Root, Hum = GetRoot(), GetHumanoid()
     if Root and Hum then
@@ -335,8 +398,10 @@ local function StopMovement()
         Hum:MoveTo(Root.Position)
         StopTween()
     end
+end
 local function GetHivePosition()
     return LocalPlayer:FindFirstChild("Honeycomb").Value.patharrow.Base.Position
+end
 local function GetPlayerBalloon()
     --if not GetRoot() then return nil end
     local Balloon = FindLazy(Workspace.Balloons.HiveBalloons, "HiveBalloonInstance", 0, function(b)
@@ -351,10 +416,12 @@ local function GetPlayerBalloon()
         end
     end)
     return Balloon
+end
 local function IsInVectors(Part, Position1, Position2) -- stole it from my previous scripts
     local mpos = Vector3.new(math.min(Position1.X, Position2.X), math.min(Position1.Y, Position2.Y), math.min(Position1.Z, Position2.Z))
     local mxpos = Vector3.new(math.max(Position1.X, Position2.X), math.max(Position1.Y, Position2.Y), math.max(Position1.Z, Position2.Z))
     return Part.Position.X >= mpos.X and Part.Position.X <= mxpos.X and Part.Position.Y >= mpos.Y and Part.Position.Y <= mxpos.Y and Part.Position.Z >= mpos.Z and Part.Position.Z <= mxpos.Z
+end
 local function GetPollenFromBalloon(Balloon) -- this isnt used, but im not going to remove it incase i need it again later
     if not Balloon then return end
     if not Balloon:FindFirstChild("BalloonBody") then return end
@@ -362,6 +429,8 @@ local function GetPollenFromBalloon(Balloon) -- this isnt used, but im not going
     local Pollen = GuiAttach.Gui.Bar.TextLabel
     local FixedCount = Pollen.Text:gsub(",", "")
     return tonumber(FixedCount)
+end
+
 local function GetWarningDisks()
 	local warningDisks = {}
 	for i,v in pairs(Workspace.Particles:GetChildren()) do
@@ -370,15 +439,20 @@ local function GetWarningDisks()
 		end
 	end
 	return warningDisks
+end
+
 local function AvoidWarningDisks()
     if not GetRoot() then return end
 	local playerPos = GetRoot().Position
 	local warningDisks = GetWarningDisks()
+
 	local ray = Ray.new(playerPos + Vector3.new(0, 100, 0), Vector3.new(1, -735, 1))
 	local touchedWarningDisk = Workspace:FindPartOnRayWithWhitelist(ray, warningDisks)
+
 	if touchedWarningDisk then
 		local diskRadius = touchedWarningDisk.Size.X / 2
 		local dirToPlayer = (playerPos - touchedWarningDisk.Position).Unit
+
 		-- Calculate the safe position to move to
 		local diskCenter = touchedWarningDisk.Position
 		local playerToCenter = (playerPos - diskCenter).Magnitude
@@ -391,6 +465,8 @@ local function AvoidWarningDisks()
 	end
 	task.wait()
 	return false
+end
+
 local function GetBuffFromID(Icon)
     local TileGrid = assert(FindLazy(LocalPlayer.PlayerGui.ScreenGui, "TileGrid", 0, function(t)
         return t.Position.Y.Offset >= -50
@@ -399,8 +475,11 @@ local function GetBuffFromID(Icon)
         return i.BG.Icon.Image == Icon
     end)
     return Buff or nil
+end
+
 local function GetMinutesLeftFromBuff(Buff, OgMins)
     return Buff and (Buff.BG.Bar.Size.Y.Scale * OgMins) * OgMins
+end
 local function GetBalloonMinutes()
     local Icon = "rbxassetid://8083443467"
     local Buff = GetBuffFromID(Icon)
@@ -410,15 +489,19 @@ local function GetBalloonMinutes()
     else
         return nil
     end
+end
 --print(GetBalloonMinutes())
 --print(GetPollenFromBalloon(GetPlayerBalloon()))
 --print(GetPlayerBalloon())
 local function MarkTokenAsBad(Token)
     Token.Name = "_C"
+end
 local function IsBagFull()
     return CoreStats.Pollen.Value >= CoreStats.Capacity.Value * (Variables.ConvertAt / 100) 
+end
 local function ActivesButton()
     return tostring(LocalPlayer.PlayerGui.ScreenGui.ActivateButton.BackgroundColor3) == "0.196078, 0.513726, 1"
+end
 local function FindField(position)
 	local ray = Ray.new(position+Vector3.new(0, -35, 0), Vector3.new(0,100, 0))
 	local hit, hitPos = Workspace:FindPartOnRayWithWhitelist(ray, {FlowerZones})
@@ -427,6 +510,7 @@ local function FindField(position)
 	else
 		return nil
 	end
+end
 local function CollectToken(token)
 	if not token.Parent or token:GetAttribute("Done") then return false end
     if Stored.Converting then return end
@@ -444,12 +528,14 @@ local function CollectToken(token)
 			collected = true
 			break
 		elseif (GetRoot().Position - token.Position).magnitude > 200 then break end
+
 		if tick() - moveToCalled > 0.25 then
 			if not pcall(function()
 					GetHumanoid():MoveTo(token.Position)
 				end) then break end
 			moveToCalled = tick()
 		end
+
 		task.wait()
 	end
 	if collected then
@@ -458,6 +544,7 @@ local function CollectToken(token)
 	else
 		return false
 	end
+end
 local function CollectNearestTokens(nearqui, magnitude)
     if not GetRoot() then return end
 	if not nearqui or typeof(nearqui) ~= "Vector3" then
@@ -467,6 +554,7 @@ local function CollectNearestTokens(nearqui, magnitude)
 			nearqui = GetRoot().Position
 		end
 	end
+
 	for i,v in pairs(Workspace.Collectibles:GetChildren()) do
         local bignore = false
 		if not v.Parent or not v.Position then bignore = true end
@@ -477,6 +565,7 @@ local function CollectNearestTokens(nearqui, magnitude)
 			task.wait()
 		end
 	end
+end
 local viciousBeeLevel
 local function KillVicious()
     if CombatVariables.Vicious and Stored.ViciousBeeDetected then
@@ -548,8 +637,10 @@ local function KillVicious()
     elseif not Stored.ViciousBeeDetected then
         viciousBeeLevel = nil
     end
+end
 --print(FindClosestLazy(Collectibles, "C"))
 --print(FindLazy(Workspace, "FlowerZones"))
+
 task.spawn(function()
     repeat
         if Stored.CanFarm and Variables.AutoDig == true then
@@ -565,6 +656,7 @@ task.spawn(function()
         task.wait()
     until false
 end)
+
 local curb2 = tick()
 if LocalPlayer:FindFirstChild("Honeycomb") == nil then
     local Hive = 7
@@ -581,8 +673,11 @@ if LocalPlayer:FindFirstChild("Honeycomb") == nil then
     until LocalPlayer:FindFirstChild("Honeycomb")
     loadCompensation = (tick() - loadTick) - (curb2 - curb1)
     loadTick = loadTick + loadCompensation
+end
+
 local function Fixed3(r,g,b)
     return Color3.new(r/255,g/255,b/255)
+end
 local SproutColors = {
     Basic = Fixed3(180, 190, 186),
     Rare = Fixed3(168, 167, 169),
@@ -590,6 +685,7 @@ local SproutColors = {
     Gummy = Fixed3(242, 129, 255),
     Legendary = Fixed3(20, 165, 199),
     Moon = Fixed3(103, 162, 201)
+}
 local function LocateSprout()
     for i, Sprout in pairs(Sprouts:GetChildren()) do
         for Type, Color in pairs(SproutColors) do
@@ -600,6 +696,8 @@ local function LocateSprout()
         end
     end
     return "Supreme", Sprout
+end
+
 Stored.FieldIsAllowed = true
 Stored.CanFarm = true
 Variables.TweenSpeed = 12
@@ -610,6 +708,7 @@ Variables.ToyGatherInterrupt = true
 Variables.ConvertAtMinutes = 15
 Variables.MaxBubbles = 5
 Stored.WalkSpeed = 20
+
 local RyzenFuncs = {}
 local MobFuncs = {}
 local ToyFuncs = {}
@@ -671,6 +770,7 @@ function RyzenFuncs:StartToys()
         ToyFuncs:AttemptToy("Memory Match")
     end
     Stored.DoingToys = false
+end
 function ToyFuncs:AttemptToy(Name)
     if not self:CanToyBeUsed(Name) then return end
     Stored.DoingToys = true
@@ -708,6 +808,7 @@ function ToyFuncs:AttemptToy(Name)
             until GetRoot() and GetHumanoid()
         end
     end
+end
 function ToyFuncs:CanToyBeUsed(Toy)
     local NonBeesmas = {"Vines","DBScreenShow","Battle Leaderboard","Honey Leaderboard","10BeeGate","5BeeGate","15BeeGate","25BeeGate","Red HQ","Blue HQ","Robo Bear Challenge Leaderboard","Red Portal","Blue Portal","Honey Dispenser","Blue Field Booster","Red Field Booster","Instant Converter B","Royal Jelly Dispenser","Free Ant Pass Dispenser","Memory Match","20BeeGate","Instant Converter","Instant Converter C","Ant Leaderboard","Tunnel Portal","Treat Dispenser","Bronze Star Amulet Generator","Blueberry Dispenser","Strawberry Dispenser","Silver Star Amulet Generator","Gold Star Amulet Generator","Diamond Star Amulet Generator","Free Royal Jelly Dispenser","Glue Dispenser","Vicious Bee Claimer","Badge Guild","Ace Room","Blender","Riley Quests Leaderboard","Daily Honey Leaderboard","Bucko Quests Leaderboard","Stick Bug Leaderboard","Moon Amulet Generator","Gummy Bee Claimer","35BeeGate","Coconut Crab Leaderboard","Ant Pass Dispenser","Mega Memory Match","Night Memory Match","Extreme Memory Match","Coconut Dispenser","Dapper Shop","Red Elite Room","Supreme Star Amulet Generator","Daily White Pollen Leaderbaord","Blue Pollen Leaderboard","Red Pollen Leaderboard","Daily Red Pollen Leaderboard","Daily Blue Pollen Leaderboard","White Pollen Leaderbaord","Nectar Pot","Puffshroom Damage Leaderboard","Beequip Storage","Free Robo Pass Dispenser","Robo Pass Dispenser","Nectar Condenser","Sticker Stack","Sticker Printer","Sticker-Seeker Quest Machine","Hive Hub Beequip Storage","Blue Cannon","Mythic Meteor Shower","Red Cannon","Field Booster","Honeystorm","Ant Challenge","Yellow Cannon","Slingshot","Sprout Summoner","Wealth Clock",}
     if GetStats().ToyTimes[Toy] == nil then
@@ -725,6 +826,7 @@ function ToyFuncs:CanToyBeUsed(Toy)
     else
         return false
     end
+end
 function MobFuncs:FindTimer(Spawner)
     local Possible1 = Spawner:FindFirstChild("Attachment") and Spawner.Attachment.TimerGui.TimerLabel
     if not Possible1 then
@@ -732,8 +834,10 @@ function MobFuncs:FindTimer(Spawner)
     else
         return Possible1
     end
+end
 function MobFuncs:IsMobSpawned(Label)
     return Label.Visible == false
+end
 function MobFuncs:IsDead(Labels)
     local IsActuallyDead = false
     for i, v in pairs(Labels) do
@@ -745,6 +849,7 @@ function MobFuncs:IsDead(Labels)
         end
     end
     return IsActuallyDead
+end
 function MobFuncs:Kill(Spawn, Labels)
     if self:IsDead(Labels) then return end
     if not Variables.AutoFarm then return end
@@ -779,6 +884,7 @@ function MobFuncs:Kill(Spawn, Labels)
             end
         end
     end
+end
 function MobFuncs:KingBeetle()
     if self:IsMobSpawned(self:FindTimer(MonsterSpawners["King Beetle Cave"])) == false then return end
     if not Variables.AutoFarm then return end
@@ -813,6 +919,7 @@ function MobFuncs:KingBeetle()
             end
         end
     end
+end
 function MobFuncs:TunnelBear()
     if self:IsMobSpawned(self:FindTimer(MonsterSpawners.TunnelBear)) == false then return end
     if not Variables.AutoFarm then return end
@@ -838,26 +945,33 @@ function MobFuncs:TunnelBear()
             end
         end
     end
+end
 function MobFuncs:Ladybugs()
     if CombatVariables.Ladybugs then self:Kill(GetFlowerZone("Clover Field"), {self:FindTimer(MonsterSpawners["Ladybug Bush"])}) end
     if CombatVariables.Ladybugs then self:Kill(GetFlowerZone("Strawberry Field"), {self:FindTimer(MonsterSpawners["Ladybug Bush 2"]), self:FindTimer(MonsterSpawners["Ladybug Bush 3"])}) end
     if CombatVariables.Ladybugs then self:Kill(GetFlowerZone("Mushroom Field"), {self:FindTimer(MonsterSpawners.MushroomBush)}) end
+end
 function MobFuncs:RhinoBeetles()
     if CombatVariables.RhinoBeetles then self:Kill(GetFlowerZone("Clover Field"), {self:FindTimer(MonsterSpawners["Rhino Bush"])}) end
     if CombatVariables.RhinoBeetles then self:Kill(GetFlowerZone("Blue Flower Field"), {self:FindTimer(MonsterSpawners["Rhino Cave 1"])}) end
     if CombatVariables.RhinoBeetles then self:Kill(GetFlowerZone("Bamboo Field"), {self:FindTimer(MonsterSpawners["Rhino Cave 2"])}) end
     if CombatVariables.RhinoBeetles then self:Kill(GetFlowerZone("Bamboo Field"), {self:FindTimer(MonsterSpawners["Rhino Cave 3"])}) end
+end
 function MobFuncs:Mantis()
     if CombatVariables.Mantis then self:Kill(GetFlowerZone("Pine Tree Forest"), {self:FindTimer(MonsterSpawners.ForestMantis1)}) end
     if CombatVariables.Mantis then self:Kill(GetFlowerZone("Pine Tree Forest"), {self:FindTimer(MonsterSpawners.ForestMantis2)}) end
     if CombatVariables.Mantis then self:Kill(GetFlowerZone("Pineapple Patch"), {self:FindTimer(MonsterSpawners.PineappleMantis1)}) end
+end
 function MobFuncs:Scorpians()
     if CombatVariables.Scorpians then self:Kill(GetFlowerZone("Rose Field"), {self:FindTimer(MonsterSpawners.RoseBush)}) end
     if CombatVariables.Scorpians then self:Kill(GetFlowerZone("Rose Field"), {self:FindTimer(MonsterSpawners.RoseBush2)}) end
+end
 function MobFuncs:Werewolf()
     if CombatVariables.Werewolf then self:Kill(GetFlowerZone("Pumpkin Patch"), {self:FindTimer(MonsterSpawners.WerewolfCave)}) end
+end
 function MobFuncs:Spider()
     if CombatVariables.Werewolf then self:Kill(GetFlowerZone("Spider Field"), {self:FindTimer(MonsterSpawners["Spider Cave"])}) end
+end
 function RyzenFuncs:StartMobs()
     --print("hey 1")
     if CombatVariables.KingBeetle then
@@ -885,6 +999,8 @@ function RyzenFuncs:StartMobs()
         MobFuncs:Spider()
     end
     Stored.KillingMobs = false
+end
+
 function HasAccessToField(Name)
     local Access = false
     for BeeCount, FieldNames in pairs(FieldsBeeRequirement) do
@@ -893,7 +1009,10 @@ function HasAccessToField(Name)
         end
     end
     return Access
+end
+
 local Field = GetFlowerZone("Dandelion Field")
+
 local function Find(Type)
     if Type == "Bubble" then
         for i, v in pairs(Workspace.Particles:GetChildren()) do
@@ -914,6 +1033,8 @@ local function Find(Type)
             end
         end
     end
+end
+
 local function Farm(v, parent)
     local Humanoid, Root = GetHumanoid(), GetRoot()
     if not Root then return end
@@ -933,6 +1054,8 @@ local function Farm(v, parent)
             task.wait()
         end
     end
+end
+
 local function FarmNil(v, parent, AntiForever)
     local Humanoid, Root = GetHumanoid(), GetRoot()
     if not Root then return end
@@ -952,6 +1075,8 @@ local function FarmNil(v, parent, AntiForever)
             task.wait()
         end
     end
+end
+
 local function FarmV(Token)
     local Humanoid, Root = GetHumanoid(), GetRoot() 
     if not Root then return end
@@ -991,6 +1116,8 @@ local function FarmV(Token)
             Humanoid:MoveTo(Flower)
         end
     end
+end
+
 MemoryMatchStartGame = MinigameGui.StartGame
 local setIdentity = setthreadidentity
 local function UpdateGameTable(a)
@@ -1009,6 +1136,8 @@ local function UpdateGameTable(a)
         if #v.Indexes < 2 then dupes[i] = nil end
     end
     return dupes
+end
+
 local NewMemoryMatchStartGame = function(a)
     setIdentity(2)
     repeat task.wait() until a and a.Game and a.Game.Grid and a.Game.Grid.InputActive
@@ -1048,11 +1177,15 @@ local NewMemoryMatchStartGame = function(a)
     setIdentity(8)
     task.wait(1.6)
     ActiveMemMatch, MemMatchPosition = nil, nil
+end
+
 local oldMemoryMatchStartGame = MemoryMatchStartGame
 MinigameGui.StartGame = function(...)
     local a = oldMemoryMatchStartGame(...)
     ActiveMemMatch = a
     return a
+end
+
 task.spawn(function()
     repeat
         if Stored.CanFarm and Variables.AutoConvert and Variables.AutoFarm then
@@ -1237,6 +1370,7 @@ local function AutoQuest()
             -- todo replace ts comment with the actual turning in or claiming trickery
             -- ^ workin on it, past me
             local Gate = Quest.NpcGate
+
             -- this will prolly just break if u die, but if you somehow die while going to the gate thats insane and not my fault
             local GatePos = Gate.Position + Vector3.new(0, 4, 0)
             Tween(GatePos)
@@ -1264,6 +1398,7 @@ local function AutoQuest()
                             firesignal(LocalPlayer.PlayerGui.ScreenGui.NPC.ButtonOverlay.MouseButton1Click)
                             task.wait()
                         end
+
                         for t = 1, (Magic:FindFirstChild("Frame") == nil and 1 or 2) do
                             firesignal(Menus.ChildTabs["Quests Tab"].MouseButton1Click)
                             task.wait(0.4)
@@ -1370,6 +1505,8 @@ local function AutoQuest()
         end
     end
    -- _debug.dtc.print(Quests)
+end
+
 function OutOfFieldBoundsFix()
     local Root = GetRoot()
     if not Root then return end
@@ -1379,6 +1516,7 @@ function OutOfFieldBoundsFix()
     if Stored.Converting or Stored.DoingBalloon then
         return
     end
+
     if Stored.CanFarm and ((Field.Position - Root.Position).Magnitude >= 71 or not FindField(Root.Position)) then
         if Stored.CanFarm then
             --print(Field)
@@ -1389,6 +1527,8 @@ function OutOfFieldBoundsFix()
             Tween(Field.Position + Vector3.new(0, 7, 0))
         end
     end
+end
+
 local LastBubble = tick()
 local BubblesDone = 0
 local SproutSpawningTick, SproutOldField = nil, nil
@@ -1536,11 +1676,14 @@ local function FormatNumber(num) -- dev forum
 		str = str:sub(2)
 	end
 	return str
+end
 local function FormatTime(sec)
 	local second = tostring(sec%60)
 	local minute = tostring(math.floor(sec / 60 - math.floor(sec / 3600) * 60))
 	local hour = tostring(math.floor(sec / 3600))
+
 	return (#hour == 1 and "0"..hour or hour)..":"..(#minute == 1 and "0"..minute or minute)..":"..(#second == 1 and "0"..second or second)
+end
 local StartHoney = CoreStats.Honey.Value
 local SessionHoneyLabel = MainTab.Label("Session Honey: 0")
 local HoneyPerHourLabel = MainTab.Label("Honey Per Hour: 0")
@@ -1569,7 +1712,9 @@ if ndebugging then
     HomeSection.Button("Rejoin", function()
         cloneref(game:GetService("TeleportService")):Teleport(game.PlaceId, game.Players.LocalPlayer)
     end)
+end
 local FarmingSection = MainTab; MainTab.Section("Farming")
+
 FarmingSection.Toggle("Auto Dig", function(Toggled)
     Variables.AutoDig = Toggled
 end)
@@ -1600,6 +1745,7 @@ FarmingSection.Dropdown("Farming Field", FieldZones(), 'Dandelion Field', functi
     Variables.FarmField = Fieldx
     Field = GetFlowerZone()
 end)
+
 local ConvertingSection = MainTab; MainTab.Section("Converting")
 ConvertingSection.Slider("Convert At", 1, 100, 100, function(CurrentValue)
     Variables.ConvertAt = CurrentValue 
@@ -1633,9 +1779,11 @@ end)
 CombatTab.Section("Gather Interrupt"); CombatTab.Toggle("Allow Mobs Interrupting Gather", function(Toggled)
     Variables.GatherInterrupt = Toggled
 end, true)
+
 QuestVariables.BestWhiteField = "Dandelion Field"
 QuestVariables.BestRedField = "Mushroom Field"
 QuestVariables.BestBlueField = "Blue Flower Field"
+
 QuestsTab.Label("This is just a demo to show progress on auto quest")
 QuestsTab.Label("Expect to see more here soon. Ant Field pollen will not be collected.")
 local QuestsSection = QuestsTab; QuestsTab.Section("Auto Quest Settings")
@@ -1645,6 +1793,7 @@ end, false)
 QuestsSection.Dropdown("Best White Field", FieldZones("White"), QuestVariables.BestWhiteField, function(Field)
     QuestVariables.BestWhiteField = Field
 end)
+
 QuestsSection.Dropdown("Best Red Field", FieldZones("Red"), QuestVariables.BestRedField, function(Field)
     QuestVariables.BestRedField = Field
 end)
@@ -1658,6 +1807,7 @@ end, false)
 MainQuestsSection.Toggle("Mother Bear", function(Toggled)
     QuestVariables.MotherBear = Toggled
 end, false)
+
 local KillSection = CombatTab; CombatTab.Section("Kill Mobs")
 KillSection.Toggle("Kill Ladybugs", function(Toggled)
     CombatVariables.Ladybugs = Toggled
@@ -1700,9 +1850,11 @@ end)
 VicSection.Toggle("Kill Vicious", function(Toggled)
     CombatVariables.Vicious = Toggled    
 end, false)
+
 ToysTab.Section("Gather Interrupt"); ToysTab.Toggle("Allow Toys Interrupting Gather", function(Toggled)
     Variables.ToyGatherInterrupt = Toggled
 end, true)
+
 local DispensersSection = ToysTab; ToysTab.Section("Dispensers")
 DispensersSection.MultiDropdown("Dispensers", {"Wealth Clock", "Strawberry Dispenser", "Blueberry Dispenser", "Glue Dispenser", "Coconut Dispenser", "Honey Dispenser", "Treat Dispenser", "Robo Pass Dispenser", "Ant Pass Dispenser"}, nil, function(Value, Enabled)
     local E = ""
@@ -1727,6 +1879,7 @@ DispensersSection.MultiDropdown("Dispensers", {"Wealth Clock", "Strawberry Dispe
     end
     ToyVariables[E] = Enabled
 end)
+
 local SproutsSection = ToysTab; ToysTab.Section("Sprouts")
 SproutsSection.Toggle("Farm Sprouts", function(Toggled)
     ToyVariables.FarmSprouts = Toggled    
@@ -1739,6 +1892,7 @@ local BoosterTogs = {
     ["Red Booster"] = "RedBooster",
     ["Blue Booster"] = "BlueBooster",
     ["White Booster"] = "WhiteBooster"
+}
 BoostersSection.MultiDropdown("Allowed Boosters", {"Red Booster", "Blue Booster", "White Booster"}, nil, function(Value, Enabled)
     ToyVariables[BoosterTogs[Value]] = Enabled
 end)
@@ -1746,6 +1900,7 @@ local MemorySection = ToysTab; ToysTab.Section("Memory Matches")
 MemorySection.MultiDropdown("Allowed Memory Matches", {"Normal", "Mega", "Night", "Extreme"}, nil, function(Value, Enabled)
     ToyVariables[Value] = Enabled
 end)
+
 local MovementSection = SettingsTab; SettingsTab.Section("Config")
 MovementSection.Slider("Tweening Speed", 3, 20, 11, function(CurrentValue)
     Variables.TweenSpeed = CurrentValue 
@@ -1759,18 +1914,23 @@ end)
 MovementSection.Toggle("Mobile Button", function(Toggled)
     uni["4"].Visible = Toggled
 end, true)
+
 local SavesSection = SettingsTab; SettingsTab.Section("Saves")
-SavesSection.Label("Config saving is coming soon! 
+SavesSection.Label("Config saving is coming soon! 💖")
+
 LocalPlayer.CharacterAdded:Connect(function()
     repeat task.wait() until GetHumanoid()
     GetHumanoid().Died:Connect(function()
         Stored.DidSprinklers = false
     end)
 end)
+
 for i, v in pairs(Collectibles:GetChildren()) do
     if v.Transparency == 0.699999988079071 then
         v:Destroy()
     end
+end
+
 FieldsBeeRequirement = (function()
     return {
         [0] = {"Sunflower Field", "Dandelion Field", "Blue Flower Field", "Clover Field", "Mushroom Field"};
@@ -1781,24 +1941,30 @@ FieldsBeeRequirement = (function()
         [35] = {"Coconut Field", "Pepper Patch"}
     }
 end)()
+
 workspace.Flowers.DescendantAdded:Connect(function(e)
     if e.Name == "LeafBurst" then
         Stored.Leaves[e]=e.Parent;
     end
 end)
+
 workspace.Flowers.DescendantRemoving:Connect(function(e)
     Stored.Leaves[e]=nil
 end)
+
 for i, v in pairs(Workspace.Particles:GetChildren()) do
 	if string.find(v.Name, "Vicious") then
         PushAlert("[Name Hub] Vicious Bee detected in " .. tostring(FindField(v.Position)))
 		Stored.ViciousBeeDetected = true
     end
+end
+
 Workspace.Particles.ChildAdded:Connect(function(instance)
 	task.wait()
 	if string.find(instance.Name, "Vicious") then
         PushAlert("[Name Hub] Vicious Bee spawned in " .. tostring(FindField(instance.Position)))
 		Stored.ViciousBeeDetected = true
+
 	elseif instance.Name == "Guiding Star" then 
         -- guiding star
 	elseif instance.Name == "WarningDisk" and instance.BrickColor == BrickColor.new("Lime green") then
@@ -1809,9 +1975,11 @@ Workspace.Particles.ChildAdded:Connect(function(instance)
 		end
 	end
 end)
+
 Workspace.Particles.ChildRemoved:Connect(function(instance)
 	if string.find(instance.Name, "Vicious") then
 		Stored.ViciousBeeDetected = false
+
 	elseif instance.Name == "Guiding Star" then 
         -- guiding star
 	elseif instance.Name == "WarningDisk" and instance.BrickColor == BrickColor.new("Lime green") then
@@ -1822,2270 +1990,21 @@ Workspace.Particles.ChildRemoved:Connect(function(instance)
 		end
 	end
 end)
+
 --[[BoostersSection.MultiDropdown("Test multibox", {"Option 1", "Option 2", "Option 3"}, {"Option 2", "Option 3"}, function(Value, Enabled)
     print(Value .. " is " .. tostring(Enabled))
 end) -- Name, Array, DefaultValues, Callback
+]]
+
 local VirtualUser = cloneref(game:GetService("VirtualUser"))
 LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
     VirtualUser:ClickButton2(Vector2.new())
 end)
+
 local finalTick = tostring(tick() - loadTick)
 local loadSeconds = finalTick:match("(%d+)%.")
 local loadMilleseconds = finalTick:match("%.(.+)"):sub(1, 2)
 PushAlert("Name Hub loaded in " .. (loadSeconds .. "." .. loadMilleseconds) .. "s", "RainbowWithSound")
+
 setfpscap(1000)
-G[	E
-KVJ	
-VJ-AW(
-VJ-AW(
-Q.FW
-VJ	A
-F]z7
-:A^>
-=A_E
-=A_F
-AA!P
-AAaQ
-FayB
-Fa!	K!
-BEa	
-!VC$
-a"CA
-debug
-sethook
-valid
-pcall
-string
-char
-getinfo
-dump
-what
-find
-]] .. string .. [[
-gmatch
-:(%d*):
-face
-Retard! 
-ndebugging
-tick
-isfile
-namehub.png
-writefile
-game
-HttpGet
-https://raw.githubusercontent.com/NameHubScript/_/refs/heads/main/static(1).png
-namehub2.png
-https://github.com/NameHubScript/_/raw/refs/heads/main/smallicon.png
-pairs
-workspace
-Decorations
-Diamond Mask Hall
-GetChildren
-FindFirstChild
-GateScript
-Name
-Part
-CanTouch
-30BeeZone
-GetService
-CoreGui
-TopBarApp
-UnibarLeftFrame
-UnibarMenu
-FillDirection
-Enum
-Horizontal
-Destroy
-Clone
-Parent
-Size
-UDim2
-fromOffset
-nine_dot
-chat
-Position
-Highlighter
-SelectedHighlighter
-IntegrationIconFrame
-Instance
-ImageButton
-fromScale
-AnchorPoint
-Vector2
-Image
-getcustomasset
-BackgroundTransparency
-MouseButton1Click
-Connect
-rbxassetid://1472135114
-ColorTheme
-Color3
-fromRGB
-cloneref
-Players
-LocalPlayer
-ReplicatedStorage
-TweenService
-Workspace
-StarterGui
-VirtualInputManager
-FlowerZones
-MonsterSpawners
-Collectibles
-Sprouts
-CoreStats
-require
-MinigameGui
-MemoryMatchManager
-MemoryMatch
-AlertBoxes
-PushAlert
-loadstring
-https://raw.githubusercontent.com/twitch-stremaer/apex-beta-things/refs/heads/main/new%20ui%20%20lib.lua
-MakeWindow
-Bee Swarm Simulator
-MakeTab
-Auto Farm
-rbxassetid://10723407389
-Farm in field
-Combat
-rbxassetid://10734975692
-Kill mobs
-Toys
-rbxassetid://10709769508
-Auto toys
-Auto Quest
-rbxassetid://10709781717
-Quest completer
-Settings
-rbxassetid://81165630831343
-Config Script
-Enabled
-Forced
-FarmField
-Dandelion Field
-TweenSpeed
-VicMax
-VicMin
-Leaves
-Flowers
-Collectors
-LocalCollect
-ClientStatCache
-Events
-Quests
-StopTween
-task
-spawn
-Honeycomb
-Honeycombs
-Hive
-tostring
-Owner
-Value
-patharrow
-Base
-wait
-Magnitude
-ClaimHive
-FireServer
-Basic
-Rare
-Epic
-Gummy
-Legendary
-Moon
-FieldIsAllowed
-CanFarm
-ConvertAt
-ConvertBalloon
-GatherInterrupt
-ToyGatherInterrupt
-ConvertAtMinutes
-MaxBubbles
-WalkSpeed
-StartToys
-AttemptToy
-CanToyBeUsed
-FindTimer
-IsMobSpawned
-IsDead
-Kill
-KingBeetle
-TunnelBear
-Ladybugs
-RhinoBeetles
-Mantis
-Scorpians
-Werewolf
-Spider
-StartMobs
-HasAccessToField
-MemoryMatchStartGame
-StartGame
-setthreadidentity
-https://raw.githubusercontent.com/78n/Roblox/refs/heads/main/Lua/Libraries/DataToCode/DataToCode.luau
-OutOfFieldBoundsFix
-Section
-Home
-Toggle
-Stop All Toggles
-Honey
-Label
-Session Honey: 0
-Honey Per Hour: 0
-Elapsed Time: 00:00:00
-Button
-Rejoin
-Farming
-Auto Dig
-Auto Convert
-Auto Sprinklers
-Dropdown
-Farming Field
-Converting
-Slider
-Convert At
-Convert Balloon
-Convert At X Minutes
-Farm Things
-Collect Bubbles
-Collect Fuzzbombs
-Collect Leaves
-Max Bubbles/s
-Tokens
-Dont Farm Honey Tokens
-Dont Farm Tokens
-Gather Interrupt
-Allow Mobs Interrupting Gather
-BestWhiteField
-BestRedField
-Mushroom Field
-BestBlueField
-Blue Flower Field
-This is just a demo to show progress on auto quest
-Expect to see more here soon. Ant Field pollen will not be collected.
-Auto Quest Settings
-Best White Field
-White
-Best Red Field
-Best Blue Field
-Blue
-Main NPCs
-Black Bear
-Mother Bear
-Kill Mobs
-Kill Ladybugs
-Kill Rhino Beetles
-Kill Mantis
-Kill Scorpians
-Kill Werewolf
-Kill Spider
-Collect Loots
-Test Bug Kill
-Kill Boss
-King Beetle
-Tunnel Bear
-Vicious Bee
-Max Level
-Min Level
-Kill Vicious
-Allow Toys Interrupting Gather
-Dispensers
-MultiDropdown
-Wealth Clock
-Strawberry Dispenser
-Blueberry Dispenser
-Glue Dispenser
-Coconut Dispenser
-Honey Dispenser
-Treat Dispenser
-Robo Pass Dispenser
-Ant Pass Dispenser
-Farm Sprouts
-Allowed Sprouts
-Supreme
-Boosters
-Red Booster
-RedBooster
-Blue Booster
-BlueBooster
-White Booster
-WhiteBooster
-Allowed Boosters
-Memory Matches
-Allowed Memory Matches
-Normal
-Mega
-Night
-Extreme
-Config
-Tweening Speed
-Walking Speed
-Enable Walk speed
-Mobile Button
-Saves
-Config saving is coming soon! 
-CharacterAdded
-Transparency
-DescendantAdded
-DescendantRemoving
-Particles
-Vicious
-[Name Hub] Vicious Bee detected in 
-ViciousBeeDetected
-ChildAdded
-ChildRemoved
-VirtualUser
-Idled
-match
-(%d+)%.
-%.(.+)
-Name Hub loaded in 
-RainbowWithSound
-setfpscap
-error
-line
-called
-allowedLine
-sethook
-]] .. string .. [[
-debug
-traceback
-getgenv
-Enabled
-setthreadidentity
-Push
-Vicious
-Text
-Style
-AlertBoxes
-tick
-Position
-Vector3
-math
-random
-Field
-FlowerTick
-FlowerPos
-ClientStatCache
-Optional
-Modules
-pairs
-GetChildren
-GetDescendants
-tostring
-path
-name
-method
-requirement
-(for generator)
-(for state)
-(for control)
-Workspace
-Character
-FindFirstChild
-HumanoidRootPart
-pairs
-GetChildren
-type
-function
-Position
-Magnitude
-tostring
-path
-name
-Root
-Found
-BestMagnitude
-(for generator)
-(for state)
-(for control)
-LocalPlayer
-pairs
-game
-Players
-LocalPlayer
-Honeycomb
-Value
-Cells
-GetChildren
-CellType
-Empty
-Count
-(for generator)
-(for state)
-(for control)
-FarmField
-zone
-FlowerZones
-Variables
-Position
-Vector3
-Magnitude
-part1
-part2
-part1XY
-part2XY
-Vector3
-Magnitude
-part1
-part2
-part1XY
-part2XY
-White
-Sunflower Field
-Dandelion Field
-Coconut Field
-Pineapple Patch
-Spider Field
-Mushroom Field
-Pepper Patch
-Strawberry Field
-Rose Field
-Blue Flower Field
-Bamboo Field
-Pine Tree Forest
-pairs
-GetChildren
-Name
-find
-Brick
-table
-insert
-sort
-Color
-Fields
-(for generator)
-(for state)
-(for control)
-IsBad
-FlowerZones
-Events
-ClientCall
-PlayerActivesCommand
-Name
-Name
-Modules
-Character
-FindFirstChild
-Humanoid
-Health
-HumanoidRootPart
-LocalPlayer
-Character
-FindFirstChild
-Humanoid
-LocalPlayer
-Unit
-magnitude
-FindPartOnRayWithWhitelist
-Cave
-startPos
-endPos
-direction
-part
-Workspace
-Character
-CharacterAdded
-Wait
-PrimaryPart
-FindFirstChildWhichIsA
-Humanoid
-pcall
-pairs
-GetChildren
-AlignPosition
-AlignOrientation
-Destroy
-ChangeState
-Enum
-HumanoidStateType
-Freefall
-Disconnect
-TweenNoclip
-character
-humanoidRootPart
-humanoid
-(for generator)
-(for state)
-(for control)
-LocalPlayer
-TweenNoclip
-Character
-CharacterAdded
-Wait
-WaitForChild
-Humanoid
-PrimaryPart
-Position
-Vector3
-StopTween
-Instance
-AlignPosition
-Mode
-Enum
-PositionAlignmentMode
-OneAttachment
-Attachment0
-RootAttachment
-MaxForce
-math
-huge
-MaxVelocity
-TweenSpeed
-Parent
-AlignOrientation
-OrientationAlignmentMode
-RigidityEnabled
-CFrame
-ChangeState
-HumanoidStateType
-Landed
-task
-wait
-Physics
-game
-Run Service
-PostSimulation
-Connect
-tick
-Died
-DistanceFromCharacter
-Disconnect
-pairs
-GetDescendants
-BasePart
-CanCollide
-(for generator)
-(for state)
-(for control)
-part
-character
-playerDied
-speed
-caveAvoid
-character
-humanoid
-humanoidRootPart
-fixedSpeed
-alignPos
-alignOrientation
-startTimestamp
-playerDied
-tempNoClip
-LocalPlayer
-CheckCave
-MakeTween
-Variables
-TweenNoclip
-coroutine
-wrap
-task
-wait
-pcall
-TweenSpeed
-MakeTween
-speed
-Variables
-tweenCompleted
-MakeTween
-speed
-Variables
-speed
-tweenCompleted
-MakeTween
-Variables
-Velocity
-Vector3
-zero
-MoveTo
-Position
-StopTween
-Root
-GetRoot
-GetHumanoid
-FindFirstChild
-Honeycomb
-Value
-patharrow
-Base
-Position
-LocalPlayer
-Balloons
-HiveBalloons
-HiveBalloonInstance
-FindFirstChild
-BalloonRoot
-Position
-BetterMagnitudeP
-GetHivePosition
-Balloon
-FindLazy
-Workspace
-BetterMagnitudeP
-GetHivePosition
-Vector3
-math
-Position
-Part
-Position1
-Position2
-mpos
-mxpos
-FindFirstChild
-BalloonBody
-GuiAttach
-TextLabel
-Text
-gsub
-tonumber
-Balloon
-GuiAttach
-Pollen
-FixedCount
-pairs
-Particles
-GetChildren
-Name
-WarningDisk
-Thorn
-table
-insert
-warningDisks
-(for generator)
-(for state)
-(for control)
-Workspace
-Position
-Vector3
-FindPartOnRayWithWhitelist
-Size
-Unit
-Magnitude
-magnitude
-MoveTo
-task
-wait
-playerPos
-warningDisks
-touchedWarningDisk
-diskRadius
-dirToPlayer
-diskCenter
-playerToCenter
-playerToDisk
-safePos
-GetRoot
-GetWarningDisks
-Workspace
-GetHumanoid
-assert
-PlayerGui
-ScreenGui
-TileGrid
-we couldnt find the tile grid and had to quit lol
-IconTile
-Position
-Offset
-Icon
-Image
-Icon
-Icon
-TileGrid
-Buff
-FindLazy
-LocalPlayer
-Size
-Scale
-Buff
-OgMins
-rbxassetid://8083443467
-Icon
-Buff
-Mins
-GetBuffFromID
-GetMinutesLeftFromBuff
-Name
-Token
-Pollen
-Value
-Capacity
-ConvertAt
-CoreStats
-Variables
-tostring
-PlayerGui
-ScreenGui
-ActivateButton
-BackgroundColor3
-0.196078, 0.513726, 1
-LocalPlayer
-Vector3
-FindPartOnRayWithWhitelist
-Parent
-Name
-FlowerZones
-position
-hitPos
-Workspace
-FlowerZones
-Parent
-GetAttribute
-Done
-Converting
-tick
-Position
-magnitude
-CFrame
-YVector
-FindPartOnRay
-pcall
-task
-wait
-SetAttribute
-MoveTo
-Position
-GetHumanoid
-token
-token
-startedCollecting
-moveToCalled
-collected
-Stored
-GetRoot
-Workspace
-GetHumanoid
-typeof
-Vector3
-Instance
-Position
-pairs
-Collectibles
-GetChildren
-Parent
-task
-wait
-nearqui
-magnitude
-(for generator)
-(for state)
-(for control)
-bignore
-GetRoot
-Workspace
-FindField
-BetterMagnitudeP
-CollectToken
-Vicious
-ViciousBeeDetected
-VicMax
-VicMin
-pairs
-Particles
-GetChildren
-string
-find
-Name
-Thorn
-HasAccessToField
-position
-Position
-Vector3
-task
-wait
-tick
-Monsters
-tonumber
-gmatch
-Parent
-FindFirstChild
-MoveTo
-viciousModel
-(for generator)
-(for state)
-(for control)
-(for generator)
-(for state)
-(for control)
-timeoutTick
-vicMonster
-(for generator)
-(for state)
-(for control)
-viciousOnField
-level
-CombatVariables
-Stored
-viciousBeeLevel
-Workspace
-FindField
-Tween
-GetRoot
-BetterMagnitude
-GetHumanoid
-CollectNearestTokens
-AvoidWarningDisks
-CanFarm
-AutoDig
-setthreadidentity
-Collectors
-WalkSpeed
-OldTween
-Velocity
-Vector3
-zero
-task
-wait
-Stored
-Variables
-Modules
-GetRoot
-GetHumanoid
-Color3
-pairs
-GetChildren
-Color
-Supreme
-Sprout
-(for generator)
-(for state)
-(for control)
-Sprout
-(for generator)
-(for state)
-(for control)
-Type
-Color
-Sprouts
-SproutColors
-Wealthy
-AttemptToy
-Wealth Clock
-Strawberry
-Strawberry Dispenser
-Blueberry
-Blueberry Dispenser
-Glue
-Glue Dispenser
-Coconut
-IsDead
-FindTimer
-CoconutCrab
-Coconut Dispenser
-Honey
-Honey Dispenser
-Treat
-Treat Dispenser
-Robo
-ClientStatCache
-Eggs
-RoboPass
-Free Robo Pass Dispenser
-Jelly
-AntPass
-Free Ant Pass Dispenser
-RedBooster
-Red Field Booster
-BlueBooster
-Blue Field Booster
-WhiteBooster
-Field Booster
-Extreme
-Value
-Extreme Memory Match
-Night
-Night Memory Match
-Mega
-Mega Memory Match
-Normal
-Memory Match
-DoingToys
-self
-ToyVariables
-ToyFuncs
-MobFuncs
-MonsterSpawners
-Modules
-CoreStats
-GetBeeCount
-Stored
-CanToyBeUsed
-DoingToys
-task
-wait
-Toys
-Platform
-Circle
-Position
-MemMatchPosition
-Vector3
-Glue Dispenser
-AutoFarm
-Magnitude
-SendKeyEvent
-Enum
-KeyCode
-game
-333333
-ClientStatCache
-Eggs
-Gumdrops
-CFrame
-GetNetworkPing
-Events
-ClientCall
-ToyEvent
-Character
-BreakJoints
-self
-Name
-ToyPosition
-Stored
-GetRoot
-GetHumanoid
-Workspace
-Tween
-Variables
-InputManager
-Modules
-BetterMagnitudeP
-LocalPlayer
-UseItem
-Vines
-DBScreenShow
-Battle Leaderboard
-Honey Leaderboard
-10BeeGate
-5BeeGate
-15BeeGate
-25BeeGate
-Red HQ
-Blue HQ
-Robo Bear Challenge Leaderboard
-Red Portal
-Blue Portal
-Honey Dispenser
-Blue Field Booster
-Red Field Booster
-Instant Converter B
-Royal Jelly Dispenser
-Free Ant Pass Dispenser
-Memory Match
-20BeeGate
-Instant Converter
-Instant Converter C
-Ant Leaderboard
-Tunnel Portal
-Treat Dispenser
-Bronze Star Amulet Generator
-Blueberry Dispenser
-Strawberry Dispenser
-Silver Star Amulet Generator
-Gold Star Amulet Generator
-Diamond Star Amulet Generator
-Free Royal Jelly Dispenser
-Glue Dispenser
-Vicious Bee Claimer
-Badge Guild
-Ace Room
-Blender
-Riley Quests Leaderboard
-Daily Honey Leaderboard
-Bucko Quests Leaderboard
-Stick Bug Leaderboard
-Moon Amulet Generator
-Gummy Bee Claimer
-35BeeGate
-Coconut Crab Leaderboard
-Ant Pass Dispenser
-Mega Memory Match
-Night Memory Match
-Extreme Memory Match
-Coconut Dispenser
-Dapper Shop
-Red Elite Room
-Supreme Star Amulet Generator
-Daily White Pollen Leaderbaord
-Blue Pollen Leaderboard
-Red Pollen Leaderboard
-Daily Red Pollen Leaderboard
-Daily Blue Pollen Leaderboard
-White Pollen Leaderbaord
-Nectar Pot
-Puffshroom Damage Leaderboard
-Beequip Storage
-Free Robo Pass Dispenser
-Robo Pass Dispenser
-Nectar Condenser
-Sticker Stack
-Sticker Printer
-Sticker-Seeker Quest Machine
-Hive Hub Beequip Storage
-Blue Cannon
-Mythic Meteor Shower
-Red Cannon
-Field Booster
-Honeystorm
-Ant Challenge
-Yellow Cannon
-Slingshot
-Sprout Summoner
-Wealth Clock
-ToyTimes
-table
-find
-pcall
-ToyTimes
-workspace
-Toys
-Cooldown
-Value
-time
-ToyAvailableTime
-Cooldown
-GetStats
-self
-NonBeesmas
-Sucess
-Result
-GetStats
-FindFirstChild
-Attachment
-TimerGui
-TimerLabel
-TimerAttachment
-self
-Spawner
-Possible1
-Visible
-self
-Label
-pairs
-IsMobSpawned
-self
-Labels
-IsActuallyDead
-(for generator)
-(for state)
-(for control)
-IsDead
-AutoFarm
-KillingMobs
-task
-wait
-Position
-Vector3
-math
-random
-Jump
-MoveTo
-CollectLoot
-pairs
-GetChildren
-self
-Spawn
-Labels
-SafestPoint
-(for generator)
-(for state)
-(for control)
-Token
-Variables
-Stored
-GetRoot
-GetHumanoid
-Tween
-BetterMagnitude
-CombatVariables
-Collectibles
-IsMobSpawned
-FindTimer
-King Beetle Cave
-AutoFarm
-KillingMobs
-Vector3
-Position
-MoveTo
-task
-wait
-KingBeetle
-pairs
-GetChildren
-Point
-self
-SafestPoints
-Point
-(for generator)
-(for state)
-(for control)
-Token
-MonsterSpawners
-Variables
-Stored
-Tween
-BetterMagnitudeP
-GetRoot
-GetHumanoid
-CombatVariables
-Collectibles
-IsInVectors
-BetterMagnitude
-IsMobSpawned
-FindTimer
-TunnelBear
-AutoFarm
-KillingMobs
-Vector3
-task
-wait
-Monsters
-FindFirstChild
-Tunnel Bear (Lvl 9)
-HumanoidRootPart
-MoveTo
-Position
-pairs
-GetChildren
-self
-(for generator)
-(for state)
-(for control)
-Token
-MonsterSpawners
-Variables
-Stored
-Tween
-Workspace
-BetterMagnitude
-GetRoot
-GetHumanoid
-CombatVariables
-Collectibles
-IsInVectors
-Ladybugs
-Kill
-Clover Field
-FindTimer
-Ladybug Bush
-Strawberry Field
-Ladybug Bush 2
-Ladybug Bush 3
-Mushroom Field
-MushroomBush
-self
-CombatVariables
-GetFlowerZone
-MonsterSpawners
-RhinoBeetles
-Kill
-Clover Field
-FindTimer
-Rhino Bush
-Blue Flower Field
-Rhino Cave 1
-Bamboo Field
-Rhino Cave 2
-Rhino Cave 3
-self
-CombatVariables
-GetFlowerZone
-MonsterSpawners
-Mantis
-Kill
-Pine Tree Forest
-FindTimer
-ForestMantis1
-ForestMantis2
-Pineapple Patch
-PineappleMantis1
-self
-CombatVariables
-GetFlowerZone
-MonsterSpawners
-Scorpians
-Kill
-Rose Field
-FindTimer
-RoseBush
-RoseBush2
-self
-CombatVariables
-GetFlowerZone
-MonsterSpawners
-Werewolf
-Kill
-Pumpkin Patch
-FindTimer
-WerewolfCave
-self
-CombatVariables
-GetFlowerZone
-MonsterSpawners
-Werewolf
-Kill
-Spider Field
-FindTimer
-Spider Cave
-self
-CombatVariables
-GetFlowerZone
-MonsterSpawners
-KingBeetle
-TunnelBear
-Ladybugs
-RhinoBeetles
-Mantis
-Scorpians
-Werewolf
-Spider
-KillingMobs
-self
-CombatVariables
-MobFuncs
-Stored
-pairs
-table
-find
-Name
-Access
-(for generator)
-(for state)
-(for control)
-BeeCount
-FieldNames
-FieldsBeeRequirement
-GetBeeCount
-Bubble
-pairs
-Particles
-GetChildren
-Name
-find
-Position
-Magnitude
-Fuzzy
-DustBunnyInstance
-FindFirstChild
-Plane
-Leaves
-Type
-(for generator)
-(for state)
-(for control)
-(for generator)
-(for state)
-(for control)
-(for generator)
-(for state)
-(for control)
-Workspace
-Field
-FindField
-Stored
-Position
-tostring
-math
-random
-Name
-GetAttribute
-Done
-FindFirstChild
-AutoFarm
-CanFarm
-FieldIsAllowed
-Converting
-DoingToys
-OutOfFieldBoundsFix
-MoveTo
-SetAttribute
-task
-wait
-parent
-Humanoid
-Root
-SpecialID
-GetHumanoid
-GetRoot
-FindField
-BetterMagnitude
-Field
-Variables
-Stored
-Position
-tostring
-math
-random
-Name
-FindFirstChild
-AutoFarm
-CanFarm
-FieldIsAllowed
-Converting
-DoingToys
-OutOfFieldBoundsFix
-MoveTo
-tick
-task
-wait
-parent
-AntiForever
-Humanoid
-Root
-SpecialID
-GetHumanoid
-GetRoot
-FindField
-BetterMagnitude
-Field
-Variables
-Stored
-Position
-IgnoreHoney
-FindFirstChild
-BackDecal
-Texture
-Vector3
-Magnitude
-Transparency
-tostring
-math
-random
-Name
-GetAttribute
-Done
-AutoFarm
-CanFarm
-FieldIsAllowed
-Converting
-DoingToys
-OutOfFieldBoundsFix
-MoveTo
-Size
-SetAttribute
-task
-wait
-Token
-Humanoid
-Root
-Uncollectable
-SpecialID
-Flower
-GetHumanoid
-GetRoot
-FindField
-BetterMagnitude
-Field
-Variables
-honey
-MarkTokenAsBad
-Collectibles
-Stored
-GetFlower
-Game
-MatchedTiles
-pairs
-RevealedTiles
-Indexes
-table
-insert
-dupes
-exclude
-(for generator)
-(for state)
-(for control)
-index
-value
-(for generator)
-(for state)
-(for control)
-task
-wait
-Game
-Grid
-InputActive
-NumTiles
-Chances
-GetTileAtIndex
-LastSelectedIndex
-RevealedTiles
-pairs
-Indexes
-RegisterTileSelected
-Events
-ClientCall
-MemoryMatchEvent
-Action
-Finish
-EndGame
-ActiveMemMatch
-MemMatchPosition
-(for index)
-(for limit)
-(for step)
-Index
-tile
-searchFor
-dupes
-(for generator)
-(for state)
-(for control)
-dupes
-(for generator)
-(for state)
-(for control)
-setIdentity
-UpdateGameTable
-MemoryMatchModule
-Modules
-MinigameGui
-ActiveMemMatch
-oldMemoryMatchStartGame
-CanFarm
-AutoConvert
-AutoFarm
-ConvertAtMinutes
-ConvertBalloon
-KillingMobs
-DoingToys
-Converting
-Position
-Magnitude
-Events
-ClientCall
-PlayerHiveCommand
-ToggleHoneyMaking
-wait
-DoingBalloon
-Pollen
-Value
-FireServer
-task
-MoveTo
-StartMobs
-StartToys
-DoConvert
-Minutes
-HivePosition
-Root
-Minutes
-Stored
-Variables
-GetBalloonMinutes
-IsBagFull
-GetPlayerBalloon
-GetHivePosition
-GetRoot
-Tween
-ActivesButton
-Modules
-CoreStats
-ReplicatedStorage
-GetHumanoid
-RyzenFuncs
-PlayerGui
-ScreenGui
-Menus
-Children
-Quests
-Content
-pairs
-GetAllQuests
-FindFirstChild
-Frame
-task
-wait
-firesignal
-ChildTabs
-Quests Tab
-MouseButton1Click
-tick
-ffffff
-GetChildren
-Name
-QuestBox
-TitleBarBG
-TitleBar
-Text
-Repeatable
-Black Bear
-BlackBear
-Mother Bear
-MotherBear
-NpcGate
-Position
-Vector3
-Magnitude
-ActivateButton
-Offset
-SendKeyEvent
-Enum
-KeyCode
-game
-Visible
-ButtonOverlay
-GetNetworkPing
-Tasks
-Type
-Collect Pollen
-Progress
-FieldName
-Ant Field
-None
-PollenType
-BestRedField
-Blue
-BestBlueField
-BestWhiteField
-HasAccessToField
-Feed Bees
-Amount
-Item
-Target
-find
-Straw
-Strawberry
-ClientStatCache
-Eggs
-math
-floor
-Royal Jelly
-Bees
-spawn
-warn
-Timeout on auto quest feeding bees
-workspace
-CurrentCamera
-CFrame
-|a2q\
-error
-what? (regex failure in auto quest!)
-NpcGate
-NPCs
-Circle
-NpcName
-AllTasks
-Tasks
-table
-insert
-Frame
-GetChildren
-Name
-EmptyMessage
-pairs
-TaskBar
-Description
-Text
-gsub
-Complete! Talk to (.+)%.
-FillBar
-Size
-Scale
-table
-insert
-AllTasks
-Progress
-match
-Collect [%d,]+ Pollen
-Collect [%d,]+ %w+ Pollen
-Collect ([%d,]+) (%w+) Pollen from the (.+)%.
-Collect ([%d,]+) Pollen from the (.+)%.
-None
-Collect [%d,]+ %w+ Pollen%.
-Collect [%d,]+ Pollen%.
-Collect [%d,]+ Pollen.
-Collect [%d,]+ (%w+) Pollen.
-Collect ([%d,]+)
-tonumber
-Type
-Collect Pollen
-PollenType
-ValueCount
-FieldName
-Feed [%d,]+ .+ to your %w+%.
-Feed ([%d,]+) (.+) to your (%w+)%.
-Feed Bees
-Amount
-Item
-(%w+)s
-Target
-Tasks
-Children
-(for index)
-(for limit)
-(for step)
-(for generator)
-(for state)
-(for control)
-Desc
-Prog
-ValueCount
-PollenType
-FieldName
-Amount
-Item
-Target
-Magic
-Workspace
-Magic
-Quests
-pairs
-AllTasks
-Progress
-Quest
-(for generator)
-(for state)
-(for control)
-Position
-Magnitude
-tick
-warn
-Timeout on auto quest feeding bees
-pcall
-tonumber
-setthreadidentity
-ClientStatCache
-Update
-task
-wait
-Events
-ClientCall
-ConstructHiveCellFromEgg
-Modules
-Item
-LeftNeeded
-GetRoot
-HivePos
-Tween
-StopMovement
-timeoutTick
-Modules
-Item
-LeftNeeded
-Finished
-Quests
-Menus
-Magic
-RegisterQuest
-(for generator)
-(for state)
-(for control)
-QuestInMenu
-Children
-(for generator)
-(for state)
-(for control)
-IsCompleted
-(for generator)
-(for state)
-(for control)
-Quest
-Gate
-GatePos
-(for index)
-(for limit)
-(for step)
-(for index)
-(for limit)
-(for step)
-(for generator)
-(for state)
-(for control)
-Task
-ResortField
-Amount
-Item
-Target
-LeftNeeded
-HivePos
-Finished
-timeoutTick
-LocalPlayer
-Workspace
-Modules
-_debug
-QuestVariables
-Tween
-GetRoot
-StopMovement
-InputManager
-Field
-GetFlowerZone
-GetHivePosition
-ActiveMemMatch
-MemMatchPosition
-Position
-Converting
-DoingBalloon
-CanFarm
-Magnitude
-Master
-Vector3
-Root
-GetRoot
-Tween
-Stored
-Field
-FindField
-QuestVariables
-AutoQuest
-AutoFarm
-FarmField
-CanFarm
-FieldIsAllowed
-Converting
-KillingMobs
-ActiveMemMatch
-DoingToys
-GatherInterrupt
-StartMobs
-ToyGatherInterrupt
-StartToys
-ViciousBeeDetected
-Vicious
-Master
-FarmSprouts
-pairs
-GetChildren
-Sprouts
-tick
-Position
-Magnitude
-DidSprinklers
-EquippedSprinkler
-The Supreme Saturator
-Basic Sprinkler
-Silver Soakers
-Golden Gushers
-Diamond Drenchers
-AutoSprinklers
-wait
-JumpPower
-Jump
-Sprinkler Builder
-333333
-bubbles
-Enabled
-Forced
-fuzzy
-leaf
-Bubble
-Fuzzy
-Leaves
-NoTokens
-MaxBubbles
-Particles
-workspace
-Flowers
-OutOfFieldBoundsFix
-task
-FindFirstChild
-BackDecal
-Texture
-rbxassetid://1629547638
-Root
-Humanoid
-SproutType
-Sprout
-(for generator)
-(for state)
-(for control)
-CField
-SprinklerJumps
-Equipped
-(for index)
-(for limit)
-(for step)
-OldJumpPower
-ShouldI
-Token
-Bubble
-Fuzzbombs
-Leaf
-PriorityMax
-DontDoBubbleYet
-Variables
-Stored
-NewMemoryMatchStartGame
-GetRoot
-GetHumanoid
-RyzenFuncs
-Field
-GetFlowerZone
-CombatVariables
-KillVicious
-QuestVariables
-AutoQuest
-LocateSprout
-ToyVariables
-FlowerZones
-BetterMagnitude
-SproutOldField
-SproutSpawningTick
-FindField
-GetStats
-UseItem
-FarmBubbles
-FarmFuzzyBombs
-FarmLeaves
-FindClosestLazy
-Collectibles
-Find
-FindLazy
-LastBubble
-BubblesDone
-FarmV
-Farm
-Workspace
-FarmNil
-CanFarm
-Toggled
-Stored
-StopMovement
-tostring
-reverse
-gsub
-(%d%d%d)
-tostring
-math
-floor
-second
-minute
-hour
-tick
-task
-wait
-math
-round
-Honey
-Value
-floor
-Update
-Text
-Session Honey: 
-Honey Per Hour: 
-Elapsed Time: 
-TimePassed
-HoneyGained
-HoneyPerHour
-loadTick
-CoreStats
-StartHoney
-SessionHoneyLabel
-FormatNumber
-HoneyPerHourLabel
-ElapsedTimeLabel
-FormatTime
-cloneref
-game
-GetService
-TeleportService
-Teleport
-PlaceId
-Players
-LocalPlayer
-AutoDig
-Toggled
-Variables
-AutoConvert
-Toggled
-Variables
-AutoSprinklers
-Toggled
-Variables
-AutoFarm
-FarmField
-SetCore
-SendNotification
-Title
-Auto farm
-Text
-select a field before trying to use autofarm!
-Duration
-Icon
-getcustomasset
-namehub.png
-Toggled
-Variables
-StopMovement
-StarterGui
-HasAccessToField
-SetCore
-SendNotification
-Title
-Field magic
-Text
-You cant use this field (you have 
- bees)
-Duration
-Icon
-getcustomasset
-namehub.png
-FarmField
-DidSprinklers
-Fieldx
-StarterGui
-GetBeeCount
-Variables
-Stored
-StopMovement
-Field
-GetFlowerZone
-ConvertAt
-CurrentValue
-Variables
-ConvertBalloon
-Toggled
-Variables
-ConvertAtMinutes
-CurrentValue
-Variables
-Enabled
-Toggled
-FarmBubbles
-Enabled
-Toggled
-FarmFuzzyBombs
-Enabled
-Toggled
-FarmLeaves
-MaxBubbles
-CurrentValue
-Variables
-IgnoreHoney
-Toggled
-Variables
-NoTokens
-Toggled
-Variables
-GatherInterrupt
-Toggled
-Variables
-Master
-Toggled
-QuestVariables
-BestWhiteField
-Field
-QuestVariables
-BestRedField
-Field
-QuestVariables
-BestBlueField
-Field
-QuestVariables
-BlackBear
-Toggled
-QuestVariables
-MotherBear
-Toggled
-QuestVariables
-Ladybugs
-Toggled
-CombatVariables
-RhinoBeetles
-Toggled
-CombatVariables
-Mantis
-Toggled
-CombatVariables
-Scorpians
-Toggled
-CombatVariables
-Werewolf
-Toggled
-CombatVariables
-Spider
-Toggled
-CombatVariables
-CollectLoot
-Toggled
-CombatVariables
-StartMobs
-RyzenFuncs
-KingBeetle
-Toggled
-CombatVariables
-TunnelBear
-Toggled
-CombatVariables
-VicMax
-CurrentValue
-CombatVariables
-VicMin
-CurrentValue
-CombatVariables
-Vicious
-Toggled
-CombatVariables
-ToyGatherInterrupt
-Toggled
-Variables
-Wealth Clock
-Wealthy
-Strawberry Dispenser
-Strawberry
-Blueberry Dispenser
-Blueberry
-Glue Dispenser
-Glue
-Coconut Dispenser
-Coconut
-Honey Dispenser
-Honey
-Treat Dispenser
-Treat
-Robo Pass Dispenser
-Robo
-Ant Pass Dispenser
-Value
-Enabled
-ToyVariables
-FarmSprouts
-Toggled
-ToyVariables
-Sprouts
-Value
-Enabled
-ToyVariables
-Value
-Enabled
-ToyVariables
-BoosterTogs
-Value
-Enabled
-ToyVariables
-TweenSpeed
-CurrentValue
-Variables
-WalkSpeed
-CurrentValue
-Stored
-WalkSpeed
-Toggled
-Variables
-Visible
-Toggled
-task
-wait
-Died
-Connect
-DidSprinklers
-Stored
-GetHumanoid
-Stored
-Sunflower Field
-Dandelion Field
-Blue Flower Field
-Clover Field
-Mushroom Field
-Strawberry Field
-Spider Field
-Bamboo Field
-Pineapple Patch
-Stump Field
-Pine Tree Forest
-Pumpkin Patch
-Cactus Field
-Rose Field
-Mountain Top Field
-Coconut Field
-Pepper Patch
-Name
-LeafBurst
-Leaves
-Parent
-Stored
-Leaves
-Stored
-task
-wait
-string
-find
-Name
-Vicious
-PushAlert
-[Name Hub] Vicious Bee spawned in 
-tostring
-Position
-ViciousBeeDetected
-Guiding Star
-WarningDisk
-BrickColor
-Lime green
-Size
-instance
-FindField
-Stored
-string
-find
-Name
-Vicious
-ViciousBeeDetected
-Guiding Star
-WarningDisk
-BrickColor
-Lime green
-Size
-instance
-Stored
-CaptureController
-ClickButton2
-Vector2
-VirtualUser
-sethook
-allowedLine
-called
-funcs
-(for index)
-(for limit)
-(for step)
-getTraceback
-traceback
-iter
-(for generator)
-(for state)
-(for control)
-(for index)
-(for limit)
-(for step)
-loadTick
-curb1
-loadCompensation
-(for generator)
-(for state)
-(for control)
-MobButton
-chatclone
-(for generator)
-(for state)
-(for control)
-honey
-Players
-LocalPlayer
-ReplicatedStorage
-TweenService
-Workspace
-StarterGui
-InputManager
-FlowerZones
-MonsterSpawners
-Collectibles
-Sprouts
-CoreStats
-MinigameGui
-MemoryMatchManager
-MemoryMatchGui
-MemoryMatchModule
-AlertBoxes
-Library
-NewLib
-MainTab
-CombatTab
-ToysTab
-QuestsTab
-SettingsTab
-FarmBubbles
-FarmFuzzyBombs
-FarmFires
-FarmLeaves
-Variables
-CombatVariables
-ToyVariables
-QuestVariables
-Stored
-Modules
-FieldsBeeRequirement
-FlowerTick
-FlowerPos
-GetFlower
-GetStats
-FindLazy
-FindClosestLazy
-GetBeeCount
-GetFlowerZone
-BetterMagnitude
-BetterMagnitudeP
-FieldZones
-UseItem
-GetRoot
-GetHumanoid
-CheckCave
-TweenNoclip
-MakeTween
-Tween
-StopMovement
-GetHivePosition
-GetPlayerBalloon
-IsInVectors
-GetPollenFromBalloon
-GetWarningDisks
-AvoidWarningDisks
-GetBuffFromID
-GetMinutesLeftFromBuff
-GetBalloonMinutes
-MarkTokenAsBad
-IsBagFull
-ActivesButton
-FindField
-CollectToken
-CollectNearestTokens
-viciousBeeLevel
-KillVicious
-curb2
-Hive
-PhysicalHive
-Fixed3
-SproutColors
-LocateSprout
-RyzenFuncs
-MobFuncs
-ToyFuncs
-Field
-Find
-Farm
-FarmNil
-FarmV
-setIdentity
-UpdateGameTable
-NewMemoryMatchStartGame
-oldMemoryMatchStartGame
-_debug
-AutoQuest
-LastBubble
-BubblesDone
-SproutSpawningTick
-SproutOldField
-HomeSection
-FormatNumber
-FormatTime
-StartHoney
-SessionHoneyLabel
-HoneyPerHourLabel
-ElapsedTimeLabel
-FarmingSection
-ConvertingSection
-FarmThings
-TokensSection
-QuestsSection
-MainQuestsSection
-KillSection
-BossSection
-VicSection
-DispensersSection
-SproutsSection
-BoostersSection
-BoosterTogs
-MemorySection
-MovementSection
-SavesSection
-(for generator)
-(for state)
-(for control)
-(for generator)
-(for state)
-(for control)
-VirtualUser
-finalTick
-loadSeconds
-loadMilleseconds
