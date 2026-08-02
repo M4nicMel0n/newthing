@@ -81,7 +81,7 @@ local Library = {}
         Banner.BorderSizePixel = 0
         Banner.Position = UDim2.new(0, 14, 0, 11)
         Banner.Size = UDim2.new(0, 100, 0, 14)
-        Banner.Image = "rbxassetid://139722478885692"
+        Banner.Image = "rbxassetid://133549714948931"
         Banner.ImageColor3 = ColorTheme
         Banner.ScaleType = Enum.ScaleType.Crop
         AddColor(Banner, "ImageColor3")
