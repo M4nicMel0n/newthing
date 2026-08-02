@@ -99,7 +99,7 @@ end)
 
 local honey = "rbxassetid://1472135114"
 
-_G.ColorTheme = Color3.fromRGB(153, 51, 255)
+_G.ColorTheme = Color3.fromRGB(0, 155, 0)
 
 local Players = cloneref(game:GetService("Players"))
 local LocalPlayer = Players.LocalPlayer
