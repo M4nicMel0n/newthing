@@ -60,7 +60,7 @@ ndebugging=true;
 local loadTick, curb1, loadCompensation = tick(), tick(), 0
 
 if not isfile("namehub.png") then
-    writefile("namehub.png", game:HttpGet("https://raw.githubusercontent.com/NameHubScript/_/refs/heads/main/static(1).png"))
+    writefile("namehub.png", game:HttpGet("https://raw.githubusercontent.com/M4nicMel0n/newthing/main/smallicon.png"))
 end
 if not isfile("namehub2.png") then
     writefile("namehub2.png", game:HttpGet("https://raw.githubusercontent.com/M4nicMel0n/newthing/main/smallicon.png"))
