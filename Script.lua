@@ -611,7 +611,7 @@ local function KillVicious()
                 if not GetRoot() then
                     repeat task.wait() until GetRoot()
                     if Workspace.Monsters:FindFirstChild(vicMonster.Name) then
-                        Tween(viciousModel.Position + Vector3.new(0, 7, 0))
+                        (viciousModel.Position + Vector3.new(0, 7, 0))
                     end
                 end
                 task.wait()
@@ -622,7 +622,7 @@ local function KillVicious()
                 if viciousOnField then
                     -- warn(findField(api.humanoidrootpart().Position))
                     if FindField(GetRoot().Position) ~= viciousOnField then
-                        Tween(viciousOnField.Position)
+                        (viciousOnField.Position)
                     end
                     if BetterMagnitude(viciousModel, GetRoot()) > 50 then
                         GetHumanoid():MoveTo(viciousModel.Position)
@@ -650,7 +650,7 @@ task.spawn(function()
         if Variables.WalkSpeed and Stored.CanFarm and GetRoot() and GetHumanoid() then
             GetHumanoid().WalkSpeed = Stored.WalkSpeed
         end
-        if Stored.OldTween and GetHumanoid() and GetRoot() then
+        if Stored.Old and GetHumanoid() and GetRoot() then
             GetRoot().Velocity = Vector3.zero
         end
         task.wait()
@@ -664,7 +664,7 @@ if LocalPlayer:FindFirstChild("Honeycomb") == nil then
         Hive = Hive - 1
         local PhysicalHive = Workspace.Honeycombs["Hive" .. tostring(Hive)]
         if PhysicalHive:FindFirstChild("Owner") and PhysicalHive:FindFirstChild("Owner").Value == nil then
-            Tween(PhysicalHive.patharrow.Base.Position, Variables.TweenSpeed)
+            (PhysicalHive.patharrow.Base.Position, Variables.TweenSpeed)
             wait(((PhysicalHive.patharrow.Base.Position - GetRoot().Position).Magnitude / 50) + 0.5)
             ReplicatedStorage.Events.ClaimHive:FireServer(Hive)
             break
@@ -1902,10 +1902,10 @@ MemorySection.MultiDropdown("Allowed Memory Matches", {"Normal", "Mega", "Night"
 end)
 
 local MovementSection = SettingsTab; SettingsTab.Section("Config")
-MovementSection.Slider("Tweening Speed", 3, 20, 11, function(CurrentValue)
+MovementSection.Slider("Tweening Speed", 3, 100, 11, function(CurrentValue)
     Variables.TweenSpeed = CurrentValue 
 end)
-MovementSection.Slider("Walking Speed", 20, 90, 20, function(CurrentValue)
+MovementSection.Slider("Walking Speed", 20, 180, 20, function(CurrentValue)
     Stored.WalkSpeed = CurrentValue 
 end)
 MovementSection.Toggle("Enable Walk speed", function(Toggled)
