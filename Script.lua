@@ -1902,10 +1902,10 @@ MemorySection.MultiDropdown("Allowed Memory Matches", {"Normal", "Mega", "Night"
 end)
 
 local MovementSection = SettingsTab; SettingsTab.Section("Config")
-MovementSection.Slider("Tweening Speed", 3, 20, 11, function(CurrentValue)
+MovementSection.Slider("Tweening Speed", 3, 100, 11, function(CurrentValue)
     Variables.TweenSpeed = CurrentValue 
 end)
-MovementSection.Slider("Walking Speed", 20, 90, 20, function(CurrentValue)
+MovementSection.Slider("Walking Speed", 20, 180, 20, function(CurrentValue)
     Stored.WalkSpeed = CurrentValue 
 end)
 MovementSection.Toggle("Enable Walk speed", function(Toggled)
